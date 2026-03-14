@@ -7,6 +7,10 @@
 </p>
 
 <p align="center">
+  <a href="https://claritymirror.vercel.app/" target="_blank"><strong>🪞 Try it live → claritymirror.vercel.app</strong></a>
+</p>
+
+<p align="center">
   <a href="#quickstart">Quickstart</a> · <a href="#the-problem">The Problem</a> · <a href="#how-it-works">How It Works</a> · <a href="#architecture">Architecture</a> · <a href="#roadmap">Roadmap</a> · <a href="#contributing">Contributing</a>
 </p>
 
