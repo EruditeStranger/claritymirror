@@ -1,143 +1,123 @@
 # Clarity Mirror — Claude Code Guide
 
-## What this project is
+## Table of Contents
 
-Clarity Mirror is a privacy-first tool that shows users the psychological and behavioral profiles that data brokers and ad platforms have built about them, framed as self-awareness rather than threat. The tagline: *"See what data brokers see when they look at you. Then choose who you actually are."*
+- [Project Overview](#project-overview)
+- [Tech Stack](#tech-stack)
+- [Running the Project](#running-the-project)
+- [Architecture](#architecture)
+  - [Core JS Data & Functions](#core-js-data--functions)
+- [Design Principles](#design-principles)
+- [Development Conventions](#development-conventions)
+- [Deployment](#deployment)
+- [Active Work](#active-work)
+- [Related Documentation](#related-documentation)
+
+---
+
+## Project Overview
+
+**Clarity Mirror** — A privacy-first tool that shows people what data brokers know about them and how advertisers use that data, framed as self-awareness rather than threat.
+
+*"See what data brokers see when they look at you. Then choose who you actually are."*
 
 Live prototype: https://claritymirror.vercel.app
 
----
+## Tech Stack
 
-## Current state
+- **Frontend:** Single self-contained HTML file (`index.html`) with inline CSS + JS. Zero dependencies, no build step.
+- **Backend:** Python serverless function (`api/reflect.py`) on Vercel, calling OpenAI GPT-5-nano for LLM reflections.
+- **Dependencies:** `openai>=1.0.0` (see `requirements.txt`)
 
-The entire working app is a single file: `index.html`. No build step, no dependencies, no server. It runs in the browser.
+**Planned (Phase 2+):** SQLite, Ollama, PyTorch + Flower (federated learning), SvelteKit
 
-All data is currently simulated. The vulnerability profiles, attention percentages, and reflections are hardcoded. The next major work is:
-1. Persona-based simulation (see `PERSONAS.md`)
-2. LLM integration for the reflection panel (see `docs/LLM-INTEGRATION.md`)
-3. Real data ingestion via CCPA requests and platform export parsers (Phase 2, not yet started)
+## Running the Project
 
----
+```bash
+# Frontend — works offline, no install
+open index.html
 
-## Repo structure
-
-```
-claritymirror/
-├── index.html                  # The entire frontend app
-├── banner.svg                  # README banner (also rendered on the live site)
-├── icon.svg                    # App icon / favicon
-├── logo.svg                    # Logo mark
-├── vercel.json                 # Vercel deployment config
-├── CLAUDE.md                   # This file
-├── README.md                   # Project overview, architecture, roadmap
-├── ROLES.md                    # Team roles and operating guide
-├── PERSONAS.md                 # Persona simulation scope
-├── CONTRIBUTING.md             # Contribution guidelines
-├── BROKER-CATALOG.md           # Data broker reference
-├── PRIVACY-MODEL.md            # Privacy guarantees and threat model
-└── docs/
-    ├── LLM-INTEGRATION.md      # How to integrate the reflection API
-    └── SYSTEM-PROMPT-BRIEF.md  # Theologian's brief for the LLM system prompt
+# Backend (local dev) — requires .env with OPENAI_API_KEY
+pip install -r requirements.txt
+# The /api/reflect endpoint runs as a Vercel serverless function in production
 ```
 
-Planned but not yet created:
-```
-├── api/
-│   └── reflect.py              # Vercel serverless function for LLM reflection
-├── src/
-│   ├── retrieval/              # CCPA request automation
-│   ├── normalization/          # Broker export parsers + unified schema
-│   └── analysis/              # Rule engine replacing hardcoded profiles
-└── docs/
-    ├── system-prompt.md        # Finalized LLM system prompt (theologian-approved)
-    ├── ETHICS.md               # Ethical foundations (theologian maintains)
-    └── DATA-SCHEMA.md          # Unified normalization schema
-```
+## Architecture
 
----
+`index.html` (~1227 lines) is the entire frontend:
+- **Lines 8–666:** CSS design system using variables (`--ink`, `--paper`, `--accent`, `--calm`, `--caution`). Fonts: Cormorant Garamond (headings), DM Sans (body). Includes grain overlay and fadeUp/breathing animations.
+- **Lines 668–776:** HTML — 3-step UI flow: select data sources → set intentions → generate analysis
+- **Lines 777–1224:** JavaScript — all application logic including LLM reflection call
 
-## Key files to understand before editing
+`api/reflect.py` — Vercel serverless function that:
+1. Receives intentions, vulnerabilities, and broker names from the frontend
+2. Loads the system prompt from `docs/system-prompt.md`
+3. Calls OpenAI GPT-5-nano with `store=False` (zero data retention)
+4. Returns a structured reflection (plain prose, 150–250 words)
 
-**`index.html`** — Read this before touching anything. The important JavaScript sections:
-- `brokers` array (line ~629) — data broker definitions
-- `intentions` array (line ~642) — hardcoded intention options
-- `vulnerabilityProfiles` array (line ~684) — the 6 hardcoded vulnerability profiles. Each has `category`, `level`, `brokers[]`, `whatTheySee`, `reflection`, and `intentionConflict`.
-- `attentionCategories` array (line ~735) — the 6 attention categories with base percentages
-- `generateMirror()` (line ~754) — handles button click, loading state, and triggers `renderResults()`
-- `renderResults()` (line ~788) — renders vulnerability cards, attention bars, and the reflection panel. **The reflection panel block (line ~851) is what LLM integration replaces.**
+### Core JS Data & Functions
 
-**`PRIVACY-MODEL.md`** — Read before making any architectural decision. The core constraint: raw broker data never leaves the device. LLM integration is a deliberate, documented exception for intention data only — not broker data.
+| Symbol | Line | Purpose |
+|---|---|---|
+| `brokers[]` | ~927 | 10 major data brokers/platforms |
+| `intentions[]` | ~940 | 6 personal intention types |
+| `vulnerabilityProfiles[]` | ~982 | 6 vulnerability categories mapped to broker combinations |
+| `attentionCategories[]` | ~1033 | 6 attention economy sectors |
+| `getMatchingVulnerabilities()` | ~1042 | Filters profiles by selected brokers |
+| `generateReflection()` | ~1052 | Calls `/api/reflect` for LLM-generated reflection |
+| `generateMirror()` | ~1064 | Orchestrates analysis with loading animation + API call via `Promise.all` |
+| `renderResults()` | ~1117 | Renders vulnerability cards, attention audit bars, and reflection panel |
 
-**`ROLES.md`** — Understand who owns what before making changes that affect copy, system prompt, or ethical framing.
+## Design Principles
 
----
-
-## Design principles — non-negotiable
-
-These are in `README.md` and apply to every code and content decision:
+Non-negotiable — raise conflicts explicitly before proceeding:
 
 - **Awareness, not anxiety** — language is "notice" and "pause," never "danger" or "warning"
-- **Local-first, always** — user data stays on device; LLM exception is intentions only, disclosed to user
+- **Local-first, always** — user data stays on device; LLM receives only intentions + vulnerability labels, never raw broker data
 - **Honest about limitations** — the profile is incomplete and sometimes wrong; say so
 - **Non-judgmental** — vulnerability categories are not character flaws
 - **Calm technology** — no urgency, no notifications, no feeds
 
-If a proposed change conflicts with these, raise it explicitly before proceeding.
+## Development Conventions
 
----
-
-## Development conventions
-
-### No build tooling (yet)
-The prototype has zero dependencies. Do not introduce a build step, package manager, or bundler without a team decision. If adding a `src/` Python backend, use standard Python conventions (`requirements.txt`, `venv`).
-
-### File editing
-- Prefer editing `index.html` directly over creating new files
-- New backend files go in `api/` (Vercel serverless) or `src/` (local backend)
-- Documentation goes in `docs/`
-
-### Sensitive content
-- Never commit API keys. Use Vercel environment variables for `ANTHROPIC_API_KEY`.
-- Never commit broker response data, personal data exports, or `.env` files.
-- `docs/system-prompt.md` (once created) requires theologian sign-off to modify.
-
-### Copy and language
-- Any user-facing text — including error messages, loading states, and empty states — should be reviewed against the vocabulary guide (once the theologian writes it)
-- The theologian co-owns the LLM system prompt. Do not modify `docs/system-prompt.md` without their review.
-
----
+- **No build tooling.** Do not introduce a build step, package manager, or bundler without a team decision.
+- **Prefer editing `index.html`** over creating new frontend files.
+- **Backend files** go in `api/` (Vercel serverless) or `src/` (local backend).
+- **Never commit** API keys, `.env` files, broker response data, or personal data exports.
+- `docs/system-prompt.md` requires theologian (Ryan) sign-off to modify.
+- User-facing copy — including error messages and empty states — should follow the project's non-judgmental, calm tone.
 
 ## Deployment
 
 Hosted on Vercel at https://claritymirror.vercel.app
 
-- Deploys automatically from `main`
-- Root directory: `claritymirror/` (the inner folder — set in Vercel project settings)
+- Auto-deploys from `main`
 - `vercel.json` handles routing and SVG cache headers
-- Future serverless functions go in `api/` within the `claritymirror/` directory
+- Serverless functions in `api/` (Python runtime)
+- Environment variable: `OPENAI_API_KEY` (set in Vercel project settings, never in repo)
 
----
-
-## Active work
+## Active Work
 
 | Task | Status | Owner | Reference |
 |---|---|---|---|
+| LLM reflection integration | **Implemented** | Engineer + Theologian | `docs/LLM-INTEGRATION.md` |
+| System prompt | **Finalized** | Theologian (Ryan) | `docs/system-prompt.md` |
 | Persona-based simulation | Scoped, not started | PM + Theologian + Engineer | `PERSONAS.md` |
-| LLM reflection integration | Scoped, not started | Engineer + Theologian | `docs/LLM-INTEGRATION.md` |
-| System prompt draft | In progress | Theologian (Ryan) | `docs/SYSTEM-PROMPT-BRIEF.md` |
 | Real broker data parsers | Not started | Engineer | `BROKER-CATALOG.md` |
 | `docs/ETHICS.md` | Not started | Theologian | — |
 | `docs/DATA-SCHEMA.md` | Not started | Engineer | — |
 
----
+## Related Documentation
 
-## Team
-
-Four people. See `ROLES.md` for full role definitions and the 30-day critical path.
-
-| Role | Responsibilities |
-|---|---|
-| Product Manager | Roadmap, specs, user interviews, GitHub milestones |
-| Application Engineer | Frontend, backend, parsers, LLM integration, some DevOps |
-| DevOps Engineer | Packaging, CI, Vercel, local backend scaffold |
-| Theologian (Ryan) | System prompt, reflection copy, vocabulary guide, `ETHICS.md` |
+| File | Description | When to consult |
+|---|---|---|
+| `README.md` | Full project overview, architecture diagrams, roadmap | First read; any product or design decision |
+| `ROLES.md` | Team roles, 30-day critical path, decision ownership | Before changes affecting copy, ethics, or team scope |
+| `PERSONAS.md` | Persona simulation scope and definitions | Starting persona feature work |
+| `PRIVACY-MODEL.md` | Privacy guarantees and threat model | Any architectural decision involving data flow |
+| `BROKER-CATALOG.md` | Data broker reference (access methods, formats) | Building parsers or adding broker support |
+| `CONTRIBUTING.md` | Contribution guidelines by skill area | Onboarding new contributors |
+| `SUMMARY.md` | Project summary with mermaid architecture diagrams | Quick visual overview of system design |
+| `docs/LLM-INTEGRATION.md` | Full LLM integration guide (API, privacy, testing) | Modifying reflection pipeline or `api/reflect.py` |
+| `docs/system-prompt.md` | Finalized LLM system prompt | Reviewing or revising reflection output quality |
+| `docs/SYSTEM-PROMPT-BRIEF.md` | Theologian's brief for system prompt authoring | Understanding the ethical rationale behind the prompt |
