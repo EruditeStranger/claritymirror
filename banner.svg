@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640">
+  <defs>
+    <radialGradient id="bg-glow" cx="35%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#1f1d1a"/>
+      <stop offset="100%" stop-color="#131210"/>
+    </radialGradient>
+    <radialGradient id="accent-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c45d3e" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#c45d3e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="line-fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f5f0e8" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#f5f0e8" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#f5f0e8" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="640" fill="url(#bg-glow)"/>
+
+  <!-- Grid texture -->
+  <line x1="0" y1="160" x2="1280" y2="160" stroke="#f5f0e8" stroke-width="0.3" opacity="0.04"/>
+  <line x1="0" y1="320" x2="1280" y2="320" stroke="#f5f0e8" stroke-width="0.3" opacity="0.06"/>
+  <line x1="0" y1="480" x2="1280" y2="480" stroke="#f5f0e8" stroke-width="0.3" opacity="0.04"/>
+  <line x1="320" y1="0" x2="320" y2="640" stroke="#f5f0e8" stroke-width="0.3" opacity="0.03"/>
+  <line x1="640" y1="0" x2="640" y2="640" stroke="#f5f0e8" stroke-width="0.3" opacity="0.05"/>
+  <line x1="960" y1="0" x2="960" y2="640" stroke="#f5f0e8" stroke-width="0.3" opacity="0.03"/>
+
+  <!-- Mirror symbol — left side -->
+  <circle cx="280" cy="320" r="160" fill="url(#accent-glow)"/>
+  <circle cx="280" cy="320" r="140" fill="none" stroke="#f5f0e8" stroke-width="0.8" opacity="0.12"/>
+  <circle cx="280" cy="320" r="95" fill="none" stroke="#f5f0e8" stroke-width="0.6" opacity="0.2"/>
+  <circle cx="280" cy="320" r="52" fill="none" stroke="#f5f0e8" stroke-width="0.8" opacity="0.35"/>
+  <circle cx="280" cy="320" r="7" fill="#f5f0e8" opacity="0.8"/>
+
+  <!-- Data points orbiting -->
+  <circle cx="280" cy="180" r="3" fill="#c45d3e" opacity="0.6"/>
+  <circle cx="385" cy="230" r="2.5" fill="#c49a3e" opacity="0.5"/>
+  <circle cx="415" cy="340" r="3" fill="#c45d3e" opacity="0.5"/>
+  <circle cx="360" cy="430" r="2.5" fill="#c49a3e" opacity="0.6"/>
+  <circle cx="230" cy="455" r="3" fill="#c45d3e" opacity="0.5"/>
+  <circle cx="145" cy="390" r="2.5" fill="#c49a3e" opacity="0.5"/>
+  <circle cx="140" cy="260" r="3" fill="#c45d3e" opacity="0.6"/>
+  <circle cx="195" cy="195" r="2.5" fill="#c49a3e" opacity="0.5"/>
+
+  <!-- Faint connection lines -->
+  <line x1="280" y1="180" x2="280" y2="313" stroke="#f5f0e8" stroke-width="0.4" opacity="0.06"/>
+  <line x1="415" y1="340" x2="287" y2="320" stroke="#f5f0e8" stroke-width="0.4" opacity="0.06"/>
+  <line x1="140" y1="260" x2="273" y2="318" stroke="#f5f0e8" stroke-width="0.4" opacity="0.06"/>
+
+  <!-- Awareness line -->
+  <line x1="230" y1="270" x2="330" y2="370" stroke="#4a7c6f" stroke-width="0.6" opacity="0.3"/>
+
+  <!-- Text — right side -->
+  <text x="520" y="275" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="400" fill="#f5f0e8" letter-spacing="-1" opacity="0.95">Clarity Mirror</text>
+  <text x="522" y="330" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" font-weight="300" fill="#f5f0e8" opacity="0.45" letter-spacing="0.5">See what they see. Then choose who you are.</text>
+
+  <!-- Tag line items -->
+  <rect x="520" y="370" width="8" height="8" rx="2" fill="#c45d3e" opacity="0.6"/>
+  <text x="540" y="378" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#f5f0e8" opacity="0.35">Vulnerability Mirror</text>
+
+  <rect x="700" y="370" width="8" height="8" rx="2" fill="#c49a3e" opacity="0.6"/>
+  <text x="720" y="378" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#f5f0e8" opacity="0.35">Attention Audit</text>
+
+  <rect x="860" y="370" width="8" height="8" rx="2" fill="#4a7c6f" opacity="0.6"/>
+  <text x="880" y="378" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#f5f0e8" opacity="0.35">Mindful Reflection</text>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="620" width="1280" height="20" fill="#c45d3e" opacity="0.08"/>
+</svg>
