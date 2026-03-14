@@ -32,6 +32,34 @@ The optional federated layer uses:
 2. **Secure aggregation**: The server only sees the aggregate of all participants' updates, never individual contributions
 3. **Minimum participation threshold**: Aggregation only occurs when enough participants contribute to prevent individual identification
 
+## LLM Reflection API Exception
+
+The reflection panel uses OpenAI's GPT-5-nano model via a serverless API call. This is a deliberate, limited exception to the local-first principle.
+
+### What is sent
+- Self-reported intention labels (e.g., "Spend more mindfully")
+- Vulnerability category labels and exposure levels (e.g., "Financial Anxiety — high")
+- Broker-voice descriptions (the "whatTheySee" text)
+- Selected broker names (e.g., "Experian, Google Ad Profile")
+
+### What is NOT sent
+- Actual broker export files or CCPA response data
+- Location data, purchase history, or behavioral records
+- Device identifiers, IP addresses (beyond what HTTPS requires), or session data
+- Any data from the local SQLite database (future phase)
+
+### Data retention
+- OpenAI API calls use `store: false`, which prevents OpenAI from storing the request or response
+- The Vercel serverless function is stateless; no request data is logged or persisted
+- No request data is stored on any server controlled by Clarity Mirror
+
+### API key scoping
+- The OpenAI API key uses Restricted permissions: only Chat completions (`/v1/chat/completions`) Write access is enabled
+- All other API surfaces (Assistants, Embeddings, Files, Fine-tuning, etc.) are set to None
+
+### User disclosure
+- Users are informed before generation that reflection uses AI and what data is sent
+
 ## Data Retention
 
 - **On device**: User controls all retention; can delete at any time
