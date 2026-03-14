@@ -537,6 +537,132 @@
     .broker-grid { grid-template-columns: 1fr 1fr; }
     .vuln-header { flex-direction: column; gap: 8px; }
   }
+
+  /* View system */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* Questionnaire */
+  .questionnaire-intro {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .questionnaire-intro h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 34px;
+    margin-bottom: 12px;
+  }
+
+  .questionnaire-intro p {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+
+  .question-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .question-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    transition: border-color 0.25s;
+  }
+
+  .question-card.answered {
+    border-color: var(--calm);
+  }
+
+  .question-text {
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .question-hint {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  .answer-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .answer-btn {
+    padding: 7px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--ink);
+  }
+
+  .answer-btn:hover { border-color: var(--ink); }
+
+  .answer-btn.selected-yes {
+    border-color: var(--calm);
+    background: var(--calm);
+    color: white;
+  }
+
+  .answer-btn.selected-unsure {
+    border-color: var(--caution);
+    background: var(--caution-soft);
+    color: var(--caution);
+  }
+
+  .answer-btn.selected-no {
+    border-color: var(--border);
+    background: var(--paper);
+    color: var(--muted);
+  }
+
+  .questionnaire-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .skip-link {
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .skip-link:hover { color: var(--ink); }
+
+  .inferred-summary {
+    display: none;
+    padding: 12px 16px;
+    background: var(--calm-soft);
+    border: 1px solid rgba(74, 124, 111, 0.2);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--calm);
+    margin-bottom: 20px;
+  }
+
+  .inferred-summary.visible { display: block; }
 </style>
 </head>
 <body>
@@ -549,11 +675,32 @@
     <p class="subtitle">See the version of you that data brokers have built — then decide who you actually are.</p>
   </div>
 
+  <!-- Questionnaire view -->
+  <div class="view active" id="view-questionnaire">
+    <div class="questionnaire-intro">
+      <div class="section-label">Discovery</div>
+      <h2>Who has your data?</h2>
+      <p>Answer a few questions about your everyday habits. We'll figure out which companies likely have a profile on you.</p>
+    </div>
+    <div class="question-list" id="question-list"></div>
+    <div class="questionnaire-actions">
+      <button class="generate-btn" onclick="goToBrokerReview()">
+        <span>See who has my data</span>
+        <span>→</span>
+      </button>
+      <a class="skip-link" onclick="showReviewView(false)">I already know my providers</a>
+    </div>
+  </div>
+
+  <!-- Review + generate view -->
+  <div class="view" id="view-review">
+
   <!-- Step 1: Select Brokers -->
   <div class="section" id="section-brokers">
     <div class="section-label">Step One — Sources</div>
     <div class="section-title">Where is your data?</div>
     <p class="section-desc">Select the data brokers and platforms that likely hold information about you. In a full implementation, this step would send automated CCPA/GDPR data access requests.</p>
+    <div class="inferred-summary" id="inferred-summary"></div>
     <div class="broker-grid" id="broker-grid"></div>
   </div>
 
@@ -617,6 +764,8 @@
 
   </div>
 
+  </div><!-- end view-review -->
+
   <div class="footer-note">
     All analysis runs locally. Your data never leaves this device.<br>
     Clarity Mirror is a tool for awareness — not anxiety.
@@ -625,6 +774,154 @@
 </div>
 
 <script>
+  // Discovery questionnaire
+  const questions = [
+    {
+      id: 'google',
+      text: 'Do you use any Google services?',
+      hint: 'Gmail, YouTube, Google Search, Maps, or an Android phone',
+      brokers: ['google'],
+    },
+    {
+      id: 'meta',
+      text: 'Do you have a Facebook or Instagram account?',
+      hint: 'Even if you rarely open it',
+      brokers: ['meta'],
+    },
+    {
+      id: 'tiktok',
+      text: 'Do you use TikTok?',
+      hint: null,
+      brokers: ['tiktok'],
+    },
+    {
+      id: 'amazon',
+      text: 'Do you shop on Amazon, or have Amazon Prime?',
+      hint: null,
+      brokers: ['amazon'],
+    },
+    {
+      id: 'credit',
+      text: 'Have you applied for a credit card, loan, or mortgage in the last few years?',
+      hint: null,
+      brokers: ['experian', 'acxiom', 'lexisnexis'],
+    },
+    {
+      id: 'public_records',
+      text: 'Are you registered to vote, or do you own property?',
+      hint: 'Both create public records that data brokers aggregate',
+      brokers: ['lexisnexis', 'acxiom'],
+    },
+    {
+      id: 'loyalty',
+      text: 'Do you use store loyalty programs or rewards cards?',
+      hint: 'Pharmacy cards, grocery points, hotel or airline rewards',
+      brokers: ['epsilon', 'acxiom'],
+    },
+    {
+      id: 'online_retail',
+      text: 'Do you regularly shop online at major retailers?',
+      hint: 'Target, Walmart, Best Buy, department stores, etc.',
+      brokers: ['liveramp', 'epsilon'],
+    },
+    {
+      id: 'health',
+      text: 'Have you searched for health information online, or used wellness apps?',
+      hint: 'Symptom lookups, fitness trackers, nutrition platforms',
+      brokers: ['oracle', 'acxiom'],
+    },
+  ];
+
+  const questionAnswers = new Map(); // questionId → 'yes' | 'unsure' | 'no'
+
+  function renderQuestionnaire() {
+    const list = document.getElementById('question-list');
+    questions.forEach(q => {
+      const card = document.createElement('div');
+      card.className = 'question-card';
+      card.id = `qcard-${q.id}`;
+      card.innerHTML = `
+        <div class="question-text">${q.text}</div>
+        ${q.hint ? `<div class="question-hint">${q.hint}</div>` : ''}
+        <div class="answer-group">
+          <button class="answer-btn" data-q="${q.id}" data-val="yes">Yes</button>
+          <button class="answer-btn" data-q="${q.id}" data-val="unsure">Not sure</button>
+          <button class="answer-btn" data-q="${q.id}" data-val="no">No</button>
+        </div>
+      `;
+      list.appendChild(card);
+    });
+
+    document.getElementById('question-list').addEventListener('click', e => {
+      const btn = e.target.closest('.answer-btn');
+      if (!btn) return;
+      const qId = btn.dataset.q;
+      const val = btn.dataset.val;
+      questionAnswers.set(qId, val);
+      // Update button styles
+      const group = btn.closest('.answer-group');
+      group.querySelectorAll('.answer-btn').forEach(b => {
+        b.classList.remove('selected-yes', 'selected-unsure', 'selected-no');
+      });
+      btn.classList.add(`selected-${val}`);
+      document.getElementById(`qcard-${qId}`).classList.add('answered');
+    });
+  }
+
+  function inferBrokersFromAnswers() {
+    const inferred = new Set();
+    for (const q of questions) {
+      const answer = questionAnswers.get(q.id);
+      if (answer === 'yes' || answer === 'unsure') {
+        q.brokers.forEach(b => inferred.add(b));
+      }
+    }
+    return inferred;
+  }
+
+  function showReviewView(fromQuestionnaire) {
+    document.getElementById('view-questionnaire').classList.remove('active');
+    const reviewView = document.getElementById('view-review');
+    reviewView.classList.add('active');
+    // Ensure sections are visible (skip entrance animation)
+    reviewView.querySelectorAll('.section').forEach(s => {
+      s.style.opacity = '1';
+      s.style.animation = 'none';
+    });
+    reviewView.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function goToBrokerReview() {
+    const inferred = inferBrokersFromAnswers();
+
+    // Pre-select inferred brokers in the grid
+    selectedBrokers.clear();
+    inferred.forEach(id => selectedBrokers.add(id));
+    document.querySelectorAll('.broker-chip').forEach(chip => {
+      const brokerName = chip.querySelector('span:last-child').textContent;
+      const broker = brokers.find(b => b.name === brokerName);
+      if (broker && selectedBrokers.has(broker.id)) {
+        chip.classList.add('active');
+        chip.querySelector('.check').textContent = '✓';
+      } else {
+        chip.classList.remove('active');
+        chip.querySelector('.check').textContent = '';
+      }
+    });
+
+    // Show summary banner
+    const summary = document.getElementById('inferred-summary');
+    if (inferred.size > 0) {
+      const names = brokers.filter(b => inferred.has(b.id)).map(b => b.name).join(', ');
+      summary.textContent = `Based on your answers, ${inferred.size} ${inferred.size === 1 ? 'company' : 'companies'} likely have your data: ${names}. You can adjust below.`;
+      summary.classList.add('visible');
+    } else {
+      summary.classList.remove('visible');
+    }
+
+    showReviewView(true);
+  }
+
   // Data broker definitions
   const brokers = [
     { id: 'acxiom', name: 'Acxiom', icon: '' },
@@ -879,6 +1176,9 @@
       `;
     }
   }
+
+  // Initialize
+  renderQuestionnaire();
 </script>
 
 </body>
