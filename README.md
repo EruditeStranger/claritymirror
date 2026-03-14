@@ -266,7 +266,7 @@ MIT — see [LICENSE](LICENSE) for details.
 ---
 
 <p align="center">
-  <img src="assets/icon.svg" alt="Clarity Mirror" width="32" height="32">
+  <img src="icon.svg" alt="Clarity Mirror" width="32" height="32">
   <br>
   <sub>This is information, not identity. Breathe. Notice. Choose.</sub>
 </p>
