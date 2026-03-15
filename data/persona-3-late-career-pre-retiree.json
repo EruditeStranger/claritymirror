@@ -1,0 +1,94 @@
+{
+  "_source": "simulated_export",
+  "_persona": "Late-career pre-retiree",
+  "_note": "Simulated mix of Experian data response, Google Takeout, and Oracle Data Cloud segment export",
+
+  "experian_data_response": {
+    "consumer_profile": {
+      "estimated_age_range": "55-64",
+      "estimated_household_income": "$145,000 - $210,000",
+      "net_worth_estimate": "moderate-high, primarily home equity and retirement accounts",
+      "dwelling_type": "owned, 15+ year resident",
+      "education": "college or graduate degree"
+    },
+    "financial_behavior": {
+      "credit_score_range": "740-800",
+      "credit_monitoring_activity": "frequent — checks score monthly or more",
+      "investment_accounts_present": true,
+      "401k_or_ira_indicator": true,
+      "long_term_care_insurance_search": true,
+      "medicare_information_search": true,
+      "financial_anxiety_index": "high — despite strong indicators, shows worry-driven financial behavior",
+      "recession_sensitivity": "elevated — searches spike during market downturns",
+      "financial_product_responsiveness": "high to fixed-income, annuity, and 'protect your wealth' messaging"
+    },
+    "health_indicators": {
+      "preventive_care_engagement": "high",
+      "chronic_condition_indicator": "possible — health monitoring products purchased",
+      "prescription_drug_indicator": "likely — one or more",
+      "supplement_purchases": "frequent",
+      "health_tracking_device": "likely — Fitbit or Apple Watch signals present",
+      "medical_search_frequency": "high — symptom and condition research"
+    },
+    "psychographic_segments": [
+      "Pre-Retiree Wealth Builder",
+      "Health-Anxious Boomer",
+      "Legacy Planner",
+      "Conservative Investor",
+      "Quality-of-Life Spender"
+    ]
+  },
+
+  "google_ad_settings": {
+    "your_interests": [
+      "Retirement planning", "Medicare & Social Security", "Investment portfolios",
+      "Anti-aging & longevity", "Health supplements", "Travel — international",
+      "Grandchildren gifts", "Estate planning", "Home equity", "Golf"
+    ],
+    "inferred_demographics": {
+      "age": "55-64",
+      "household_income": "affluent",
+      "home_ownership": "owner"
+    },
+    "search_history_themes": [
+      "when can I retire calculator",
+      "Medicare supplement plan comparison",
+      "how much do I need to retire comfortably",
+      "market crash 2024 retirement",
+      "signs of cognitive decline",
+      "best supplements for joint health over 55",
+      "legacy planning for children",
+      "social security at 62 vs 67",
+      "long term care insurance worth it",
+      "sequence of returns risk"
+    ]
+  },
+
+  "oracle_data_cloud_segments": {
+    "audience_segments": [
+      "Retirement Planning Intenders",
+      "Medicare Decision-Makers",
+      "High-Net-Worth Pre-Retirees",
+      "Health-Anxious 55+",
+      "Fixed Income Seekers",
+      "Annuity Prospects",
+      "Estate Planning Researchers",
+      "Anti-Aging Product Buyers",
+      "Financially Conservative Older Adults"
+    ],
+    "behavioral_signals": {
+      "financial_urgency_responsiveness": "very high",
+      "fear_of_loss_messaging_response": "high — responds to 'protect what you've built'",
+      "scarcity_framing_response": "moderate",
+      "authority_figure_trust": "high — responsive to doctor and financial advisor endorsements"
+    }
+  },
+
+  "browsing_and_media": {
+    "news_consumption": "high — major outlets plus financial news",
+    "peak_usage": ["morning 6am-9am", "evening 7pm-10pm"],
+    "device_primary": "tablet and desktop",
+    "content_affinity": ["financial news", "health information", "travel planning", "family content"],
+    "ad_click_through_rate": "above average for financial products and health supplements"
+  }
+}

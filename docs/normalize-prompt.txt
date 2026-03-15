@@ -1,0 +1,32 @@
+You are a data normalization tool for Clarity Mirror. Read the file I specify and produce a JSON object with the exact structure below. Use only evidence from the file. Omit fields you cannot support. attention_allocation values must sum to 100. Return only valid JSON, no explanation, no markdown.
+
+{
+  "persona_label": "one of: early-career-professional | mid-career-parent | pre-retiree | college-student | freelancer | caregiver | unknown",
+  "data_sources": ["list of platforms or brokers the data came from"],
+  "ad_interests": ["interest and topic categories found in the data"],
+  "inferred_demographics": {
+    "age_range": "string",
+    "income_bracket": "string",
+    "life_stage": "string",
+    "location_type": "urban | suburban | rural | unknown"
+  },
+  "behavioral_signals": ["specific behaviors observed in the data"],
+  "broker_segments": ["named psychographic or audience segments from the data"],
+  "vulnerability_scores": {
+    "financial_anxiety": 0,
+    "health_vulnerability": 0,
+    "status_comparison": 0,
+    "impulse_susceptibility": 0,
+    "attention_fragmentation": 0,
+    "emotional_targeting": 0
+  },
+  "attention_allocation": {
+    "financial_products": 0,
+    "wellness_supplements": 0,
+    "lifestyle_aspiration": 0,
+    "productivity_tools": 0,
+    "news_outrage": 0,
+    "entertainment_escapism": 0
+  },
+  "top_intention_conflicts": ["up to 3 of: Spend more mindfully | Reduce anxiety-driven decisions | Protect my focus | Make health choices from evidence | Resist status comparison | Be present with people I love"]
+}

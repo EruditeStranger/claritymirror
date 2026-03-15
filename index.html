@@ -663,6 +663,79 @@
   }
 
   .inferred-summary.visible { display: block; }
+
+  /* Profile upload */
+  .upload-zone {
+    border: 1.5px dashed var(--border);
+    border-radius: 12px;
+    padding: 28px 24px;
+    text-align: center;
+    margin-bottom: 40px;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: pointer;
+  }
+
+  .upload-zone:hover, .upload-zone.drag-over {
+    border-color: var(--calm);
+    background: var(--calm-soft);
+  }
+
+  .upload-zone input[type="file"] { display: none; }
+
+  .upload-zone p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .upload-zone .upload-btn {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--calm);
+    border: 1px solid rgba(74, 124, 111, 0.3);
+    border-radius: 20px;
+    padding: 7px 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .upload-zone .upload-btn:hover {
+    background: var(--calm);
+    color: white;
+  }
+
+  .upload-loaded {
+    display: none;
+    padding: 12px 16px;
+    background: var(--calm-soft);
+    border: 1px solid rgba(74, 124, 111, 0.2);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--calm);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .upload-loaded.visible { display: block; }
+
+  .divider-or {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 32px 0;
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .divider-or::before, .divider-or::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
 </style>
 </head>
 <body>
@@ -682,6 +755,17 @@
       <h2>Who has your data?</h2>
       <p>Answer a few questions about your everyday habits. We'll figure out which companies likely have a profile on you.</p>
     </div>
+
+    <!-- Profile file upload -->
+    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('profile-file-input').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleFileDrop(event)">
+      <input type="file" id="profile-file-input" accept=".json" onchange="handleFileSelect(event)">
+      <p>Have a normalized profile from <code>claude -p</code>? Load it directly.</p>
+      <span class="upload-btn">Choose .json file</span>
+    </div>
+    <div class="upload-loaded" id="upload-loaded"></div>
+
+    <div class="divider-or">or answer a few questions</div>
+
     <div class="question-list" id="question-list"></div>
     <div class="questionnaire-actions">
       <button class="generate-btn" onclick="goToBrokerReview()">
@@ -775,7 +859,95 @@
 </div>
 
 <script>
-  // Discovery questionnaire
+  // ── Profile file loading ─────────────────────────────────────────────────
+
+  let loadedProfile = null;
+
+  const SOURCE_TO_BROKER = {
+    google: 'google', google_ad_settings: 'google',
+    meta: 'meta', meta_ad_preferences: 'meta',
+    amazon: 'amazon', amazon_advertising_profile: 'amazon',
+    acxiom: 'acxiom', experian: 'experian',
+    lexisnexis: 'lexisnexis', liveramp: 'liveramp',
+    epsilon: 'epsilon', oracle: 'oracle',
+    tiktok: 'tiktok', tiktok_data_export: 'tiktok',
+    spotify: 'spotify', linkedin: 'linkedin',
+  };
+
+  const VULN_KEY_MAP = {
+    'Financial Anxiety':       'financial_anxiety',
+    'Health Vulnerability':    'health_vulnerability',
+    'Status Comparison':       'status_comparison',
+    'Impulse Susceptibility':  'impulse_susceptibility',
+    'Attention Fragmentation': 'attention_fragmentation',
+    'Emotional Targeting Window': 'emotional_targeting',
+  };
+
+  const ATTENTION_KEY_MAP = [
+    'financial_products',
+    'wellness_supplements',
+    'lifestyle_aspiration',
+    'productivity_tools',
+    'news_outrage',
+    'entertainment_escapism',
+  ];
+
+  function scoreToLevel(score) {
+    if (score >= 7) return 'high';
+    if (score >= 4) return 'medium';
+    return 'low';
+  }
+
+  function applyLoadedProfile(profile) {
+    loadedProfile = profile;
+
+    // Pre-select brokers from data_sources
+    selectedBrokers.clear();
+    (profile.data_sources || []).forEach(src => {
+      const id = SOURCE_TO_BROKER[src.toLowerCase().replace(/\s+/g, '_')];
+      if (id) selectedBrokers.add(id);
+    });
+
+    // Pre-select matching intentions
+    (profile.top_intention_conflicts || []).forEach(intent => {
+      if (intentions.includes(intent)) selectedIntentions.add(intent);
+    });
+
+    // Show loaded banner
+    const banner = document.getElementById('upload-loaded');
+    banner.textContent = `Profile loaded: ${profile.persona_label || 'custom'} — ${Object.keys(profile.vulnerability_scores || {}).length} vulnerability signals, ${(profile.data_sources || []).length} data sources.`;
+    banner.classList.add('visible');
+
+    // Go straight to review
+    goToBrokerReview();
+  }
+
+  function handleFileSelect(event) {
+    const file = event.target.files[0];
+    if (file) readProfileFile(file);
+  }
+
+  function handleFileDrop(event) {
+    event.preventDefault();
+    document.getElementById('upload-zone').classList.remove('drag-over');
+    const file = event.dataTransfer.files[0];
+    if (file) readProfileFile(file);
+  }
+
+  function readProfileFile(file) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        const profile = JSON.parse(e.target.result);
+        applyLoadedProfile(profile);
+      } catch {
+        alert('Could not read that file. Make sure it\'s a valid JSON profile from claude -p.');
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  // ── Discovery questionnaire
   const questions = [
     {
       id: 'google',
@@ -1040,9 +1212,14 @@
   ];
 
   function getMatchingVulnerabilities() {
-    if (selectedBrokers.size === 0) {
-      return vulnerabilityProfiles.slice(0, 4);
+    if (loadedProfile && loadedProfile.vulnerability_scores) {
+      const scores = loadedProfile.vulnerability_scores;
+      return vulnerabilityProfiles
+        .filter(v => (scores[VULN_KEY_MAP[v.category]] || 0) > 0)
+        .sort((a, b) => (scores[VULN_KEY_MAP[b.category]] || 0) - (scores[VULN_KEY_MAP[a.category]] || 0))
+        .map(v => ({ ...v, level: scoreToLevel(scores[VULN_KEY_MAP[v.category]] || 0) }));
     }
+    if (selectedBrokers.size === 0) return vulnerabilityProfiles.slice(0, 4);
     const matched = vulnerabilityProfiles.filter(v =>
       v.brokers.some(b => selectedBrokers.has(b))
     );
@@ -1145,13 +1322,15 @@
     const barsContainer = document.getElementById('attention-bars');
     barsContainer.innerHTML = '';
 
-    // Randomize percentages based on selected brokers
-    const seed = selectedBrokers.size || 3;
-    const pcts = [28, 22, 18, 14, 11, 7].map(p => p + (Math.random() * 8 - 4));
-    const total = pcts.reduce((a, b) => a + b, 0);
+    // Use loaded profile allocation if available, otherwise randomize
+    const alloc = loadedProfile && loadedProfile.attention_allocation;
+    const rawPcts = alloc
+      ? ATTENTION_KEY_MAP.map(k => alloc[k] || 0)
+      : [28, 22, 18, 14, 11, 7].map(p => p + (Math.random() * 8 - 4));
+    const total = rawPcts.reduce((a, b) => a + b, 0);
 
     attentionCategories.forEach((cat, i) => {
-      const pct = Math.round((pcts[i] / total) * 100);
+      const pct = alloc ? rawPcts[i] : Math.round((rawPcts[i] / total) * 100);
       const item = document.createElement('div');
       item.className = 'attention-item';
       item.innerHTML = `

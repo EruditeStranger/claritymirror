@@ -1,0 +1,88 @@
+{
+  "_source": "simulated_export",
+  "_persona": "Small business owner / freelancer",
+  "_note": "Simulated mix of Google Takeout, LinkedIn data export, Epsilon segment data, and Meta Ad Preferences",
+
+  "google_ad_settings": {
+    "your_interests": [
+      "Small business finance", "Accounting & bookkeeping", "Business loans & credit",
+      "Productivity software", "Remote work tools", "Health insurance for self-employed",
+      "Retirement planning for freelancers", "Tax optimization", "Client management",
+      "Content creation tools", "LinkedIn & professional networking"
+    ],
+    "inferred_demographics": {
+      "age": "30-45",
+      "employment_status": "self-employed",
+      "household_income": "variable — estimated $60,000-$130,000",
+      "home_ownership": "possible"
+    },
+    "search_history_themes": [
+      "how to get clients as a freelancer",
+      "quarterly estimated taxes calculator",
+      "best health insurance for self employed 2024",
+      "SEP IRA vs solo 401k",
+      "how to handle slow months freelance",
+      "invoice software small business",
+      "is my rate too low freelance",
+      "how to stop procrastinating work from home",
+      "burn out freelancer symptoms",
+      "LLC vs S corp for freelancers"
+    ]
+  },
+
+  "linkedin_data_export": {
+    "profile_views_industry_breakdown": ["Marketing & Advertising", "Technology", "Media", "Consulting"],
+    "skills_endorsed": ["Project management", "Content strategy", "Client relations", "Brand development"],
+    "content_engagement": {
+      "topics_engaged": ["Entrepreneurship", "Productivity", "Career growth", "Hustle culture critique",
+                         "Work-life balance", "AI tools for business", "Freelancing tips"],
+      "posting_frequency": "moderate — occasional thought leadership posts"
+    },
+    "ads_clicked": [
+      "FreshBooks", "QuickBooks Self-Employed", "Notion", "Calendly", "Loom",
+      "LinkedIn Premium Business", "HubSpot Starter", "Stripe Atlas"
+    ]
+  },
+
+  "epsilon_segment_data": {
+    "audience_classifications": [
+      "Self-Employed Professional",
+      "Variable Income Household",
+      "Productivity Tool Adopter",
+      "Financial Stress — Irregular Income Pattern",
+      "Health Insurance Searcher — Self-Employed",
+      "Solo 401k / SEP IRA Researcher",
+      "Hustle Culture Engaged"
+    ],
+    "financial_risk_indicators": {
+      "income_volatility": "high",
+      "emergency_fund_indicator": "unclear — searches suggest concern about savings",
+      "credit_utilization": "elevated during slow business periods",
+      "insurance_gap_indicator": "likely — self-employed health insurance search frequency high",
+      "retirement_savings_urgency": "high — late to retirement planning relative to age"
+    },
+    "behavioral_signals": {
+      "productivity_tool_adoption_rate": "above average — tries many tools, cancels most",
+      "self_optimization_content_engagement": "high",
+      "financial_urgency_responsiveness": "high — responds to 'stop leaving money on the table' framing",
+      "scarcity_responsiveness": "moderate — limited time offers effective during slow income periods"
+    }
+  },
+
+  "meta_ad_preferences": {
+    "your_topics": [
+      "Business", "Technology", "Productivity", "Finance",
+      "Marketing", "Entrepreneurship", "Wellness", "Travel"
+    ],
+    "advertisers_retargeting": [
+      "QuickBooks", "FreshBooks", "Gusto", "Bench Accounting",
+      "Calm", "Headspace", "MasterClass", "Skillshare",
+      "American Express Business", "Chase Ink Business"
+    ],
+    "engagement_patterns": {
+      "peak_hours": ["early morning 6-8am", "late night 10pm-midnight"],
+      "emotional_state_correlation": "high anxiety engagement during client dry spells",
+      "content_type_affinity": ["business tips", "productivity hacks", "financial security", "success stories"]
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "_source": "simulated_export",
+  "_persona": "Mid-career parent",
+  "_note": "Simulated mix of Amazon purchase history, Google Takeout, and LexisNexis response",
+
+  "amazon_advertising_profile": {
+    "inferred_interests": [
+      "Children's toys & games", "Baby & child health", "Organic food & grocery",
+      "Home improvement", "Time-saving appliances", "Educational materials",
+      "Supplements & vitamins", "Sleep aids", "Family vehicles", "Streaming services"
+    ],
+    "purchase_categories_last_12mo": [
+      "Baby & Toddler", "Health & Household", "Grocery & Gourmet",
+      "Home & Kitchen", "Toys & Games", "Sports & Outdoors", "Books"
+    ],
+    "subscribe_and_save_items": [
+      "Multivitamins", "Probiotics", "Diapers", "Cleaning supplies",
+      "Coffee pods", "Protein powder", "Melatonin"
+    ],
+    "wish_lists": ["Home office upgrade", "Family vacation gear", "Kids' art supplies"]
+  },
+
+  "google_ad_settings": {
+    "your_interests": [
+      "Parenting", "Family health", "Nutrition", "Mental health",
+      "Home organization", "Career advancement", "Sleep & wellness",
+      "Minivans & family SUVs", "College savings plans", "Life insurance"
+    ],
+    "inferred_demographics": {
+      "age": "35-44",
+      "parental_status": "parent",
+      "household_income": "middle to upper-middle",
+      "home_ownership": "likely homeowner"
+    },
+    "search_history_themes": [
+      "symptoms in children", "pediatrician near me", "is this normal toddler behavior",
+      "best family SUV 2024", "529 plan vs UTMA", "how to get kids to sleep",
+      "work from home productivity tips", "signs of burnout", "anxiety vs stress symptoms",
+      "quick healthy dinners 30 minutes"
+    ]
+  },
+
+  "lexisnexis_data_response": {
+    "household_profile": {
+      "estimated_household_size": 4,
+      "presence_of_children": true,
+      "children_age_range": "0-8",
+      "dwelling_type": "owned, single-family",
+      "length_of_residence": "4-7 years",
+      "estimated_household_income": "$110,000 - $155,000"
+    },
+    "financial_indicators": {
+      "mortgage_present": true,
+      "auto_loan_present": true,
+      "life_insurance_indicator": "likely",
+      "college_savings_indicator": "possible",
+      "discretionary_spend_index": "below average — constrained by family expenses"
+    },
+    "health_data_indicators": {
+      "health_insurance_type": "employer-sponsored",
+      "medical_search_frequency": "high",
+      "wellness_product_purchases": "frequent",
+      "prescription_drug_indicator": "possible — one or more household members"
+    },
+    "psychographic_segments": [
+      "Stretched Middle Class",
+      "Time-Starved Parent",
+      "Health-Anxious Caregiver",
+      "Convenience Purchaser",
+      "Responsible Planner"
+    ]
+  },
+
+  "meta_ad_preferences": {
+    "your_topics": [
+      "Parenting", "Family", "Health", "Education", "Home",
+      "Food", "Wellness", "Work-Life Balance"
+    ],
+    "advertisers_you_interact_with": [
+      "BabyCenter", "WebMD", "Meal Kit Delivery Services", "Peloton",
+      "Calm", "Amazon Prime", "Target", "Gap Kids", "AARP (retargeted)"
+    ],
+    "engagement_patterns": {
+      "peak_hours": ["5am-7am before kids wake", "9pm-11:30pm after bedtime"],
+      "content_type_affinity": ["parenting advice", "health information", "time-saving products", "family activities"],
+      "emotional_engagement": "high on parenting anxiety content, health worry content"
+    }
+  }
+}

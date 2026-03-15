@@ -1,0 +1,90 @@
+{
+  "_source": "simulated_export",
+  "_persona": "Caregiver (parent, elder care)",
+  "_note": "Simulated mix of Google Takeout, Amazon, Meta Ad Preferences, and LiveRamp segment data",
+
+  "google_ad_settings": {
+    "your_interests": [
+      "Elder care & senior living", "Dementia & Alzheimer's resources",
+      "In-home care services", "Child health & pediatrics",
+      "Mental health & caregiver burnout", "Medical equipment & supplies",
+      "Meal delivery services", "Respite care", "Grief & loss support",
+      "Legal & estate planning", "Senior financial assistance programs"
+    ],
+    "inferred_demographics": {
+      "age": "38-55",
+      "household_income": "middle income, financially strained",
+      "caregiver_status": "likely — sustained search pattern across elder care and child care topics"
+    },
+    "search_history_themes": [
+      "how to talk to aging parent about care",
+      "signs of caregiver burnout",
+      "is it normal to feel resentful as a caregiver",
+      "assisted living vs in-home care cost",
+      "how to get paid to care for elderly parent",
+      "FMLA for caregiving",
+      "caregiver support groups near me",
+      "how to manage your own mental health while caregiving",
+      "what stage of dementia is this",
+      "secondary trauma caregivers",
+      "I feel guilty for being angry at my parent"
+    ]
+  },
+
+  "amazon_advertising_profile": {
+    "purchase_categories": [
+      "Health & Personal Care", "Medical Supplies & Equipment",
+      "Adult incontinence products", "Mobility aids",
+      "Baby & Toddler (concurrent — dual caregiving)",
+      "Vitamins & Supplements", "Comfort food & snacks",
+      "Books — self-help, grief, caregiving", "Streaming & entertainment subscriptions"
+    ],
+    "subscribe_and_save": [
+      "Adult briefs", "Nutritional supplements", "Pain relief medication",
+      "Sleep aids (personal use)", "Coffee — high volume"
+    ],
+    "browsing_patterns": {
+      "late_night_purchases": "frequent — 10pm-2am",
+      "impulse_buy_indicator": "elevated — emotional purchasing correlated with high-stress periods",
+      "comfort_category_spend": "above average — food, entertainment, small self-treats"
+    }
+  },
+
+  "meta_ad_preferences": {
+    "your_topics": [
+      "Caregiving", "Family", "Health", "Mental Health",
+      "Senior Care", "Parenting", "Faith & Spirituality", "Food"
+    ],
+    "advertisers_retargeting": [
+      "AARP Caregiver Resources", "A Place for Mom", "Meals on Wheels",
+      "BetterHelp", "Talkspace", "Headspace", "Calm",
+      "Instacart", "DoorDash", "Netflix", "Hallmark Channel"
+    ],
+    "engagement_patterns": {
+      "peak_hours": ["early morning 5-7am before caregiving begins", "late night 11pm-1am"],
+      "emotional_content_engagement": "very high — grief, family, nostalgia, faith content",
+      "escapism_content_engagement": "high — comfort TV, food content, lighthearted content",
+      "guilt_trigger_responsiveness": "very high — responds strongly to 'are you doing enough?' framing"
+    }
+  },
+
+  "liveramp_identity_data": {
+    "segment_classifications": [
+      "Active Caregiver — Elder",
+      "Sandwich Generation Household",
+      "Caregiver Burnout Risk",
+      "Emotionally Exhausted Consumer",
+      "High Empathy Segment",
+      "Grief & Loss Adjacent",
+      "Faith-Motivated Consumer",
+      "Comfort Purchaser"
+    ],
+    "vulnerability_profile": {
+      "guilt_responsiveness": "very high — effective framing: 'give them the care they deserve'",
+      "exhaustion_driven_purchasing": "high — buys convenience products and comfort items under stress",
+      "hope_and_relief_messaging": "high response — responds to 'finally, a solution' framing",
+      "social_isolation_indicator": "moderate to high — reduced social activity noted",
+      "financial_strain_indicator": "moderate — caregiving costs affecting household budget"
+    }
+  }
+}

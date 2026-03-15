@@ -1,0 +1,90 @@
+{
+  "_source": "simulated_export",
+  "_persona": "Early-career urban professional",
+  "_note": "Simulated mix of Google Takeout, Meta Ad Preferences, and Acxiom response",
+
+  "google_ad_settings": {
+    "your_interests": [
+      "Personal finance", "Investing & retirement planning", "Credit cards",
+      "Luxury goods & services", "Fashion & style", "Travel", "Fitness & wellness",
+      "Apartment & condo rentals", "Career development", "Cocktails & spirits",
+      "Restaurants", "Live music & concerts", "Online shopping", "Tech gadgets"
+    ],
+    "inferred_demographics": {
+      "age": "25-34",
+      "gender": "unknown",
+      "parental_status": "not a parent",
+      "household_income": "upper middle income",
+      "education": "bachelor's degree or higher"
+    },
+    "location_history_summary": {
+      "home_area": "urban core, major metro",
+      "frequent_locations": ["gym", "coffee shops", "coworking spaces", "restaurants", "airport"]
+    }
+  },
+
+  "meta_ad_preferences": {
+    "advertisers_you_interact_with": [
+      "Robinhood", "Betterment", "SoFi", "Rent the Runway", "Allbirds",
+      "Away Travel", "Headspace", "ClassPass", "LinkedIn", "Spotify Premium"
+    ],
+    "your_topics": [
+      "Finance", "Career", "Fashion", "Travel", "Health & Fitness",
+      "Food & Drink", "Music", "Home Decor", "Sustainability"
+    ],
+    "off_facebook_activity": {
+      "purchases": ["Everlane", "Glossier", "Away", "United Airlines"],
+      "browsing": ["NerdWallet", "Zillow", "LinkedIn", "Indeed", "Vanguard"]
+    }
+  },
+
+  "acxiom_data_response": {
+    "demographic_data": {
+      "estimated_age_range": "25-32",
+      "estimated_income": "$65,000 - $95,000",
+      "dwelling_type": "renter, apartment",
+      "length_of_residence": "under 2 years",
+      "education_level": "college graduate"
+    },
+    "financial_indicators": {
+      "credit_activity": "active, multiple accounts opened in past 18 months",
+      "investment_accounts": "present",
+      "student_loan_indicator": "likely",
+      "discretionary_spend_index": "high relative to income",
+      "financial_stress_indicator": "moderate — income does not match lifestyle spend pattern"
+    },
+    "purchase_behavior": {
+      "categories": ["Apparel", "Dining", "Travel", "Electronics", "Subscriptions"],
+      "online_purchase_frequency": "weekly",
+      "brand_affinity": "aspirational mid-premium",
+      "deal_sensitivity": "low — pays full price more often than average"
+    },
+    "psychographic_segments": [
+      "HENRY (High Earner Not Rich Yet)",
+      "Urban Achiever",
+      "Aspirational Spender",
+      "Career Focused",
+      "Experience Seeker"
+    ]
+  },
+
+  "browsing_signals": {
+    "frequent_search_themes": [
+      "how to negotiate salary",
+      "best credit cards for travel rewards",
+      "investing in your 20s",
+      "how much should I have saved by 30",
+      "HENRY finance reddit",
+      "is my rent too high calculator",
+      "luxury items worth it",
+      "how to stop impulse buying"
+    ],
+    "content_engagement": {
+      "high": ["career advice", "personal finance", "aspirational lifestyle", "travel"],
+      "medium": ["fitness", "food", "tech"],
+      "low": ["news", "politics", "parenting"]
+    },
+    "average_daily_screen_time_estimate": "5.2 hours",
+    "peak_usage_windows": ["morning commute 7-9am", "lunch 12-1pm", "late evening 10pm-1am"]
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "_source": "simulated_export",
+  "_persona": "College student / recent graduate",
+  "_note": "Simulated mix of TikTok data export, Meta Ad Preferences, Spotify, and Acxiom response",
+
+  "tiktok_data_export": {
+    "browsing_history_topics": [
+      "Finance tips", "Student loan forgiveness", "GRWM (Get Ready With Me)",
+      "Day in my life", "Career advice", "Soft life aesthetic", "Luxury unboxing",
+      "Thrift flips", "Side hustle ideas", "Viral products", "Mental health",
+      "Aesthetic room decor", "Manifestation", "Comparison content"
+    ],
+    "video_interactions": {
+      "liked_content_categories": [
+        "Aspirational lifestyle", "Career success stories", "Financial independence",
+        "Fashion & beauty", "Food & restaurant", "Mental health awareness",
+        "Relationship advice", "Travel content"
+      ],
+      "average_session_length_minutes": 47,
+      "sessions_per_day": 6,
+      "late_night_usage": "frequent — 11pm to 2am peak"
+    },
+    "ads_clicked": [
+      "Afterpay BNPL", "Klarna", "NordVPN", "Athletic Greens", "Notion Premium",
+      "LinkedIn Premium trial", "SHEIN", "Temu", "Depop", "Nuuly clothing rental"
+    ]
+  },
+
+  "meta_ad_preferences": {
+    "your_topics": [
+      "Fashion", "Beauty", "Travel", "Career", "Social causes",
+      "Entertainment", "Music", "Food", "Fitness", "Self-improvement"
+    ],
+    "off_platform_browsing": {
+      "frequent_sites": ["Reddit (r/personalfinance, r/StudentLoans)", "Indeed", "Glassdoor",
+                         "Instagram", "Pinterest", "Depop", "Etsy", "Amazon"],
+      "purchase_patterns": "frequent small purchases, BNPL usage elevated"
+    },
+    "advertisers_retargeting_you": [
+      "Klarna", "Afterpay", "Capital One Quicksilver", "Sallie Mae", "Earnest (student loans)",
+      "Bumble", "Hinge", "SHEIN", "Urban Outfitters", "Spotify", "Apple Music"
+    ]
+  },
+
+  "spotify_data": {
+    "listening_patterns": {
+      "peak_hours": ["10pm-2am"],
+      "mood_correlation": "high sad/melancholy late night, high energy daytime",
+      "podcast_topics": ["career", "self-improvement", "true crime", "finance basics"]
+    }
+  },
+
+  "acxiom_data_response": {
+    "demographic_profile": {
+      "estimated_age": "20-26",
+      "estimated_income": "$18,000 - $42,000",
+      "student_loan_indicator": "very likely",
+      "credit_history_length": "short — less than 4 years",
+      "dwelling_type": "renter — apartment or shared housing",
+      "life_stage": "early independence"
+    },
+    "financial_vulnerability": {
+      "debt_to_income_ratio_estimate": "high",
+      "buy_now_pay_later_usage": "active",
+      "overdraft_indicator": "possible",
+      "financial_literacy_segment": "developing",
+      "financial_product_responsiveness": "high to BNPL, credit builder, and 'start investing with $5' messaging"
+    },
+    "psychographic_segments": [
+      "Status-Conscious Young Adult",
+      "Debt-Burdened Early Career",
+      "Identity Seeker",
+      "FOMO-Driven Consumer",
+      "Aspirational Minimalist (buys minimalist aesthetic, not minimal)"
+    ]
+  },
+
+  "behavioral_summary": {
+    "primary_tension": "knows money is tight, continues to spend on identity-signaling purchases",
+    "comparison_sensitivity": "very high — frequently measures self against peer group and aspirational accounts",
+    "impulsivity_index": "high — BNPL enables purchases that income does not support",
+    "attention_pattern": "highly fragmented — average 12+ app switches per hour",
+    "anxiety_triggers": ["career uncertainty", "financial comparison", "social performance", "appearance"]
+  }
+}
